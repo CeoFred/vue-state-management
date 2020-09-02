@@ -1,50 +1,49 @@
 import * as types from '../types';
 
-
 const state = {
-  counter : 0
+    counter: 0
 };
 
 const getters = {
-  [types.DOUBLE_COUNTER]: function(state){
-      return state.counter * 2
+    [types.DOUBLE_COUNTER]: state => {
+        return state.counter * 2;
     },
-    stringCounter: function(state){
-      return state.counter + ' Clicks'
-    },
-}
+    [types.CLICK_COUNTER]: state => {
+        return state.counter + ' Clicks';
+    }
+};
 
 const mutations = {
-   increment: function(state, payload){
-      state.counter += payload
+    [types.MUTATE_INCREMENT_COUNTER]: (state, payload) => {
+        state.counter += payload;
     },
-    decrement: function(state, payload){
-      state.counter -= payload
-    },
-}
+    [types.MUTATE_DECREMENT_COUNTER]: (state, payload) => {
+        state.counter -= payload;
+    }
+};
 
 const actions = {
-   increment: function({commit}, payload){
-      commit('increment',payload);
+    [types.COUNTER_INCREMENT]: ({ commit }, payload) => {
+        commit(types.MUTATE_INCREMENT_COUNTER, payload);
     },
-     decrement: function({commit}, payload){
-      commit('decrement',payload);
+    [types.COUNTER_DECREMENT]: ({ commit }, payload) => {
+        commit(types.MUTATE_DECREMENT_COUNTER, payload);
     },
-    asyncIncrement: function({commit}, payload){
-      setTimeout(() => {
-        commit('increment',payload.by);
-      }, payload.duration);
+    [types.COUNTER_INCREMENT_ASYNC]: ({commit}, payload) => {
+        setTimeout(() => {
+            commit(types.MUTATE_INCREMENT_COUNTER, payload.by);
+        }, payload.duration);
     },
-    asyncDecrement: function({commit},payload){
-  setTimeout(() => {
-        commit('decrement',payload.by);
-      }, payload.duration);
-    },
-}
+    [types.COUNTER_DECREMENT_ASYNC]: ({commit}, payload) => {
+        setTimeout(() => {
+            commit(types.MUTATE_DECREMENT_COUNTER, payload.by);
+        }, payload.duration);
+    }
+};
 
 export default {
-  actions,
-  state,
-  getters,
-  mutations
+    state,
+    mutations,
+    actions,
+    getters
 }
